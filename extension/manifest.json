@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "AutoTark – Auto24 import",
+  "version": "0.1.0",
+  "description": "Impordi Auto24 kuulutuse autoandmed AutoTark raportisse.",
+  "permissions": [],
+  "host_permissions": ["https://www.auto24.ee/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.auto24.ee/soidukid/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": { "16": "icon.svg", "48": "icon.svg", "128": "icon.svg" }
+}
+

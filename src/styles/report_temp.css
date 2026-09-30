@@ -1,0 +1,87 @@
+﻿  /* ==========================================
+     REPORT - RESPONSIVE
+     ========================================== */
+  @media (max-width: 1024px) {
+    .report-container {
+      flex-direction: column;
+    }
+    .report-sidebar {
+      flex: 1 1 auto;
+      position: static;
+    }
+    .evidence-summary {
+      padding: var(--spacing-md);
+    }
+    .evidence-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .report-main {
+      padding: 0;
+    }
+    .report-section {
+      padding: var(--spacing-md);
+    }
+    .section-list-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .item-status {
+      margin-top: var(--spacing-sm);
+      width: 100%;
+    }
+    .report-footer-content {
+      flex-direction: column;
+    }
+    .pros-cons-box {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .report-container {
+      padding: var(--spacing-md);
+      gap: var(--spacing-md);
+    }
+    .report-header-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .report-actions {
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .report-actions .button {
+      flex: 1 1 auto;
+    }
+    .evidence-grid {
+      grid-template-columns: 1fr;
+    }
+    .car-title {
+      font-size: 1.75rem;
+    }
+    .report-section h2 {
+      font-size: 1.125rem;
+    }
+    .section-list-item {
+      padding: var(--spacing-sm);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .evidence-grid {
+      grid-template-columns: 1fr;
+    }
+    .evidence-item {
+      padding: var(--spacing-sm);
+    }
+    .evidence-item .value {
+      font-size: 1.25rem;
+    }
+    .report-actions {
+      flex-direction: column;
+    }
+    .report-actions .button {
+      width: 100%;
+    }
+  }

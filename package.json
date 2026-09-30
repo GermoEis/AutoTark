@@ -1,0 +1,33 @@
+{
+  "name": "autotark",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "research": "tsx backend/cli.ts",
+    "research:api": "tsx backend/api.ts",
+    "db:migrate": "tsx backend/migrate.ts",
+    "test:research": "tsx --test backend/**/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-router-dom": "^5.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "pg": "^8.16.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
+    "tsx": "^4.19.4"
+  }
+}
+
