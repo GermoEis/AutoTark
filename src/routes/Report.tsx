@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { getAnalysis, getVinImages } from '../api';
+import { getAnalysis, getVinImages, saveCar, deleteSavedCar, getSavedCars } from '../api';
 import type { Analysis, Claim, VinImageResult } from '../api';
 
 const evidenceLabels: Record<string, string> = {
@@ -50,6 +50,7 @@ function Report() {
   const [isSaved, setIsSaved] = useState(false);
   const [activeTab, setActiveTab] = useState<'all' | 'critical' | 'checklist' | 'questions'>('all');
   const [copiedVin, setCopiedVin] = useState(false);
+  const [saveBusy, setSaveBusy] = useState(false);
 
   useEffect(() => {
     if (!carId) return;
@@ -57,6 +58,7 @@ function Report() {
     getAnalysis(carId)
       .then((data) => {
         setAnalysis(data);
+        getSavedCars().then((saved) => setIsSaved(saved.some((car) => car.url === data.url))).catch(() => undefined);
       })
       .catch((reason) => {
         setError(reason instanceof Error ? reason.message : 'Raportit ei õnnestunud laadida. Kontrolli, kas Research API töötab.');
@@ -74,6 +76,24 @@ function Report() {
     navigator.clipboard.writeText(vin);
     setCopiedVin(true);
     setTimeout(() => setCopiedVin(false), 2000);
+  };
+
+  const toggleSaved = async () => {
+    if (!analysis || saveBusy) return;
+    setSaveBusy(true);
+    try {
+      if (isSaved) {
+        const saved = await getSavedCars();
+        const current = saved.find((car) => car.url === analysis.url);
+        if (current) await deleteSavedCar(current.id);
+        setIsSaved(false);
+      } else {
+        await saveCar(analysis, analysis.id);
+        setIsSaved(true);
+      }
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : 'Auto salvestamine ebaõnnestus.');
+    } finally { setSaveBusy(false); }
   };
 
   if (error) {
@@ -168,7 +188,8 @@ function Report() {
             <div className="report-header-btns">
               <button
                 className="button secondary"
-                onClick={() => setIsSaved(!isSaved)}
+                onClick={() => void toggleSaved()}
+                disabled={saveBusy}
                 title={isSaved ? 'Eemalda lemmikutest' : 'Salvesta lemmikuks'}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill={isSaved ? '#e11d48' : 'none'} stroke={isSaved ? '#e11d48' : 'currentColor'} strokeWidth="2">

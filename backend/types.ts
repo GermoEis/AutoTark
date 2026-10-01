@@ -32,6 +32,12 @@ export interface AnalysisRequest extends ListingSnapshot {
   createdAt: string;
 }
 
+export interface SavedCar extends ListingSnapshot {
+  id: string;
+  analysisId?: string | null;
+  createdAt: string;
+}
+
 export interface ResearchJob extends VehicleIdentity {
   id: string;
   priority: number;

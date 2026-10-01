@@ -8,6 +8,17 @@ const validVin = (vin: string): string => {
   return normalized;
 };
 
+const isReachableImage = async (url: string): Promise<boolean> => {
+  try {
+    const response = await fetch(url, { headers: { accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8', 'user-agent': 'Mozilla/5.0 AutoTark/1.0' }, signal: AbortSignal.timeout(config.requestTimeoutMs) });
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!response.ok || !contentType.toLowerCase().startsWith('image/')) return false;
+    const reader = response.body?.getReader();
+    if (reader) { await reader.read(); await reader.cancel(); }
+    return true;
+  } catch { return false; }
+};
+
 export const searchVinImages = async (vinInput: string): Promise<{ vin: string; images: VinImageResult[]; googleSearchUrl: string }> => {
   const vin = validVin(vinInput);
   const queries = [
@@ -28,5 +39,7 @@ export const searchVinImages = async (vinInput: string): Promise<{ vin: string; 
       // One failed image query must not hide results returned by the other queries.
     }
   }
-  return { vin, images: [...new Map(images.map((image) => [image.url, image])).values()].slice(0, 12), googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
+  const uniqueImages = [...new Map(images.map((image) => [image.url, image])).values()].slice(0, 24);
+  const availability = await Promise.all(uniqueImages.map(async (image) => ({ image, available: await isReachableImage(image.url) })));
+  return { vin, images: availability.filter((item) => item.available).map((item) => item.image).slice(0, 12), googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
 };

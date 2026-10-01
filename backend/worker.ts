@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { pool } from './db.js';
-import { researchNext } from './research.js';
+import { processNextResearchJob } from './worker-cycle.js';
 
 const intervalMs = Number(process.env.RESEARCH_WORKER_INTERVAL_MS ?? 5000);
 let stopping = false;
@@ -20,7 +20,7 @@ const run = async (): Promise<void> => {
   console.log(`Research worker töötab. Kontrollin järjekorda iga ${intervalMs} ms järel.`);
   while (!stopping) {
     try {
-      const job = await researchNext();
+      const job = await processNextResearchJob();
       if (job) console.log(`Research job lõpetatud: ${job.id}`);
     } catch (error) {
       console.error('Research job ebaõnnestus:', error instanceof Error ? error.message : error);

@@ -6,7 +6,7 @@ Frontend jääb Vite/React rakenduseks. Research-agent on eraldi Node/TypeScript
 
 1. Paigalda sõltuvused: `npm install`.
 2. Kopeeri `.env.example` failiks `.env`, lisa `DATABASE_URL` ja `TAVILY_API_KEY`.
-3. Käivita PostgreSQL-is migratsioonid `db/migrations/001_research.sql`, `db/migrations/002_claim_language.sql`, `db/migrations/003_analysis_requests.sql` ja `db/migrations/004_vin.sql`.
+3. Käivita PostgreSQL-is migratsioonid `db/migrations/001_research.sql` kuni `db/migrations/005_job_claims_saved_comparisons.sql`.
    Võid need käivitada ka käsuga `npm run db:migrate`.
 4. Käivita LM Studio, lae Qwen3-Coder-Next või muu sobiv mudel ja ava OpenAI-compatible server aadressil `LM_STUDIO_BASE_URL`.
 
@@ -36,5 +36,7 @@ Veebirakenduse analüüsivoog kasutab `VITE_RESEARCH_API_URL` aadressi. Arenduse
 
 ## Testid
 
-`npm run test:research` kontrollib normaliseerimist, source rankingut, range JSON valideerimist ja SSRF kaitset. Integratsioonitestid päris PostgreSQL/Tavily/LM Studio ühendusega tuleks lisada järgmises faasis.
+`npm run test:research` kontrollib normaliseerimist, source rankingut, range JSON valideerimist ja SSRF kaitset.
+
+Päris kohaliku keskkonna integratsioonitestid käivituvad käsuga `RUN_INTEGRATION_TESTS=1 npm run test:research` (PowerShellis: `$env:RUN_INTEGRATION_TESTS='1'; npm run test:research`). Need eeldavad, et PostgreSQL, Research API ja LM Studio töötavad.
 

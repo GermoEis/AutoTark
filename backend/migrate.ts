@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { pool } from './db.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const migrations = ['001_research.sql', '002_claim_language.sql', '003_analysis_requests.sql', '004_vin.sql'];
+const migrations = ['001_research.sql', '002_claim_language.sql', '003_analysis_requests.sql', '004_vin.sql', '005_job_claims_saved_comparisons.sql'];
 
 try {
   for (const migration of migrations) {

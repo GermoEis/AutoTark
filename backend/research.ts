@@ -17,7 +17,7 @@ export const researchJob = async (job: ResearchJob): Promise<boolean> => {
   const extractedClaims = [];
   for (let index = 0; index < fetched.length; index += 2) { const batch = fetched.slice(index, index + 2); const extracted = await llm.extract(job, batch); extractedClaims.push(...extracted.claims); }
   let savedClaims = 0;
-  for (const claim of extractedClaims) { if (!isVehicleProblemCandidate(claim)) continue; claim.evidenceLevel = evidenceLevelFor(['automotive_media'], claim.sourceUrls.length); const sourceIds = claim.sourceUrls.map((url) => sourceIdsByUrl.get(url)).filter((id): id is string => Boolean(id)); if (sourceIds.length) { if (sourceIds.length === 1) claim.confidence = Math.min(claim.confidence, 0.45); await saveClaim(claim, sourceIds); savedClaims += 1; } }
+  for (const claim of extractedClaims) { if (!isVehicleProblemCandidate(claim)) continue; claim.evidenceLevel = evidenceLevelFor(['automotive_media'], claim.sourceUrls.length); const sourceIds = claim.sourceUrls.map((url) => sourceIdsByUrl.get(url)).filter((id): id is string => Boolean(id)); if (sourceIds.length) { if (sourceIds.length === 1) claim.confidence = Math.min(claim.confidence, 0.45); await saveClaim(claim, sourceIds, job.id); savedClaims += 1; } }
   if (!savedClaims) await needsReviewJob(job.id, 'Sources were fetched, but the model returned no claim with a matching source URL');
   return savedClaims > 0;
 };
