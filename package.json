@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "research": "tsx backend/cli.ts",
     "research:api": "tsx backend/api.ts",
+    "research:worker": "tsx backend/worker.ts",
     "db:migrate": "tsx backend/migrate.ts",
     "test:research": "tsx --test backend/**/*.test.ts"
   },

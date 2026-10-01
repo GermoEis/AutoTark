@@ -2,82 +2,45 @@ import { Link } from 'react-router-dom';
 
 export default function TermsPage() {
   return (
-    <div className="page terms-page">
-      <div className="container">
-        <h1 className="page-title">Kasutustingimused</h1>
+    <div className="page" style={{ padding: '2rem 0 5rem' }}>
+      <div className="container" style={{ maxWidth: '840px' }}>
+        <div className="page-header">
+          <p className="eyebrow">
+            <span className="pulse-dot"></span>
+            Õiguslik teave
+          </p>
+          <h1>Kasutustingimused</h1>
+          <p>Viimati uuendatud: jaanuar 2025</p>
+        </div>
 
-        <div className="content-section">
-          <p className="intro-text">
-            Käesolevad kasutustingimused kirjeldavad teie õigusi kui kasutajale
-            ja teid huvitavate tingimuste kohta, mis kehtivad AutoTark veebilehe
-            ja teenuse kasutamise kohta.
+        <div className="report-card">
+          <h2>1. Üldised põhimõtted</h2>
+          <p>
+            AutoTark on veebipõhine analüüsitööriist, mis aitab kasutatud auto ostjatel analüüsida kuulutuste andmeid, kaardistada mudelite tüüpvigu ning saada ostueelseid soovitusi.
           </p>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">1. Üldine kirjeldus</h2>
-          <p>
-            AutoTark on veebipõhine tööriist, mis aitab auto ostjatel analüüsida
-            kuulutusi ja teha informatsioonipõhiseid otsuseid. Teenus põhineb
-            külgutuste andmetel, mille kogume teie esitatud lingidest.
-          </p>
-        </div>
-
-        <div className="content-section">
-          <h2 className="section-heading">2. Teenuse kasutamine</h2>
-          <p>
-            Kasutades AutoTark teenust nõustute järgmiste tingimustega:
-          </p>
-          <ul className="info-list">
-            <li>Teenuse kasutate ainult seaduslikel eesmärkidel</li>
-            <li>Te ei katasta teenust kolmandatele osapooltele</li>
-            <li>Te ei kasuta automaatseid sisteeme, mis võiksid häirata teenuse tööd</li>
-            <li>Te edastate ainult korrektsed ja täielikud andmed</li>
+        <div className="report-card">
+          <h2>2. Teenuse kasutamine</h2>
+          <p>Teenust kasutades nõustute järgnevaga:</p>
+          <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', color: 'var(--color-text-secondary)', fontSize: '0.95rem' }}>
+            <li>Kasutate teenust üksnes isiklikuks ja seaduslikuks otstarbeks.</li>
+            <li>Te ei kuritarvita teenust ega kasuta automaatseid skripte teenuse töö häirimiseks.</li>
+            <li>Te sisestate kontrolliks korrektseid avalike kuulutuste linke ja kehtivaid VIN-koode.</li>
           </ul>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">3. Andmete kaitse</h2>
+        <div className="report-card">
+          <h2>3. Vastutuse piirang</h2>
           <p>
-            Täielikud andmete käsitlemise tingimused leiate meie
-            <Link to="/privaatsus">privaatsuspoliitikast</Link>. Kasutades teenust,
-            nõustute andmete käsitlemise tingimustega.
+            AutoTark koondab avalikest allikatest pärinevat teavet. Me ei garanteeri auto täielikku vigadeta seisukorda ega asenda professionaalset autotehniku kohapealset ülevaatust. Lõpliku ostuotsuse ja sellega seotud riskide eest vastutab ostja.
           </p>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">4. Auto kuulutuste analüüs</h2>
+        <div className="report-card">
+          <h2>4. Kontakt ja küsimused</h2>
           <p>
-            AutoTark ei garantieri analüüsi täpsust. Analüüs põhineb ainult
-            kuulutuses esitatud teatel ja ei välista võimalikke vigu. Te olete
-            vastutavad oma otsuste eest.
-          </p>
-        </div>
-
-        <div className="content-section">
-          <h2 className="section-heading">5. Vastutus</h2>
-          <p>
-            AutoTark ei vastuta kahjude eest, mis võivad olla seotud teenuse
-            kasutamise või võimatuks jäämisega. Teenust pakutakse "nagu on"
-            põhimõttel.
-          </p>
-        </div>
-
-        <div className="content-section">
-          <h2 className="section-heading">6. Üldased sätted</h2>
-          <p>
-            Me võime muuta neid tingimusi aja jooksul. Muudatused avaldatakse
-            veebilehel ja neid kasutatakse alates muudatuse kuupäevast.
-          </p>
-        </div>
-
-        <div className="content-section">
-          <h2 className="section-heading">7. Küsimused</h2>
-          <p>
-            Kui teil on küsimusi kasutustingimustega seoses, võtke meiega ühendust:
-          </p>
-          <p className="contact-email">
-            {/* Email will be configured from config.ts when available */}
+            Küsimuste korral tutvu meie <Link to="/meist">tutvustusega</Link> või kirjuta meile <Link to="/kontakt">kontaktilehe</Link> kaudu.
           </p>
         </div>
       </div>

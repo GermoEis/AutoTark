@@ -5,102 +5,126 @@ export default function ContactPage() {
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
+  const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Sõnum saadetud! Võtame teiega ühendust esimesel võimalusel.');
+    setSent(true);
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
-    <div className="page contact-page">
-      <div className="container">
-        <h1 className="page-title">Kontakt</h1>
-
-        <div className="content-section">
-          <p className="intro-text">
-            Olete leidnud midagi, mis teid huvi ei ärrita, või soovite lihtsalt rääkida?
-            Me oleme alati valmis kuulma ja aitama.
+    <div className="page" style={{ padding: '2rem 0 5rem' }}>
+      <div className="container" style={{ maxWidth: '840px' }}>
+        <div className="page-header">
+          <p className="eyebrow">
+            <span className="pulse-dot"></span>
+            Kasutajatugi ja koostöö
           </p>
-        </div>
-
-        <div className="content-section">
-          <h2 className="section-heading">Vormi kaudu</h2>
-          
-          <form onSubmit={handleSubmit} className="contact-form">
-            <div className="form-group">
-              <label htmlFor="name">Nimi</label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-                placeholder="Teie nimi"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">E-post</label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-                placeholder="teie@postileht.ee"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="subject">Teema</label>
-              <input
-                type="text"
-                id="subject"
-                value={formData.subject}
-                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                required
-                placeholder="Sõnumi teema"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">Sõnum</label>
-              <textarea
-                id="message"
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-                rows={5}
-                placeholder="Kirjutage siia oma sõnum..."
-              />
-            </div>
-
-            <button type="submit" className="btn btn-primary btn-lg">
-              Saada sõnum
-            </button>
-          </form>
-        </div>
-
-        <div className="content-section">
-          <h2 className="section-heading">Otsene kontakt</h2>
+          <h1>Võta meiega ühendust</h1>
           <p>
-            Kui soovite otse ühendust, saate meid võtta üles e-posti teel:
-          </p>
-          <p className="contact-email">
-            {/* Email will be configured from config.ts when available */}
+            Kas soovid anda tagasisidet, pakkuda uut funktsiooni või teatada veast? Kirjuta meile ja vastame esimesel võimalusel.
           </p>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">Kasutajatugi</h2>
-          <p>
-            Kui teil on küsimusi AutoTark kasutamise kohta, konsulteerige meie
-            Meist lehte või jälgige meie teavitusi.
-          </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(260px, 0.8fr)', gap: '2rem', alignItems: 'start' }}>
+          <div className="report-card">
+            <h2>Saada meile sõnum</h2>
+
+            {sent ? (
+              <div className="notification success" style={{ margin: '1rem 0' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <div>
+                  <strong>Aitäh! Sinu sõnum on saadetud.</strong>
+                  <p style={{ margin: '0.25rem 0 0', fontSize: '0.85rem' }}>Võtame sinuga ühendust sisestatud e-posti teel.</p>
+                </div>
+              </div>
+            ) : null}
+
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label" htmlFor="name">Sinu nimi *</label>
+                <input
+                  id="name"
+                  className="input"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                  placeholder="Nt. Mart Tamm"
+                />
+              </div>
+
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label" htmlFor="email">E-posti aadress *</label>
+                <input
+                  id="email"
+                  type="email"
+                  className="input"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  required
+                  placeholder="mart.tamm@gmail.com"
+                />
+              </div>
+
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label" htmlFor="subject">Teema *</label>
+                <input
+                  id="subject"
+                  className="input"
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                  required
+                  placeholder="Nt. Tagasiside BMW raporti kohta või laienduse küsimus"
+                />
+              </div>
+
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label" htmlFor="message">Sõnum *</label>
+                <textarea
+                  id="message"
+                  className="input"
+                  rows={5}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  required
+                  placeholder="Kirjuta siia oma küsimus või ettepanek…"
+                  style={{ resize: 'vertical' }}
+                />
+              </div>
+
+              <button type="submit" className="button lg" style={{ marginTop: '0.5rem' }}>
+                <span>Saada sõnum</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="report-card">
+              <h3>Otsene kontakt</h3>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>
+                Võid meile alati kirjutada ka otse e-posti aadressil:
+              </p>
+              <div style={{ padding: '0.85rem 1rem', background: 'var(--color-bg-dark)', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-mono)', fontSize: '0.9rem', color: 'var(--color-primary)', fontWeight: 700 }}>
+                info@autotark.ee
+              </div>
+            </div>
+
+            <div className="report-card">
+              <h3>Vastamise aeg</h3>
+              <p className="text-secondary" style={{ fontSize: '0.875rem', margin: 0 }}>
+                Vastame tööpäeviti tavaliselt 24 tunni jooksul.
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

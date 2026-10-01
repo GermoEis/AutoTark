@@ -4,6 +4,7 @@ import Analyze from './routes/Analyze';
 import Report from './routes/Report';
 import SavedCars from './routes/SavedCars';
 import Compare from './routes/Compare';
+import CompareResults from './routes/CompareResults';
 import ResearchDebug from './routes/ResearchDebug';
 import Layout from './components/Layout';
 
@@ -19,14 +20,17 @@ function App() {
         <Route path="/report/:carId" element={<Report />} />
         <Route path="/saved" element={<SavedCars />} />
         <Route path="/compare" element={<Compare />} />
+        <Route path="/compare/results" element={<CompareResults />} />
         <Route path="/research-debug" element={<ResearchDebug />} />
         
-        {/* Legal pages */}
+        {/* Legal & Info pages */}
         <Route path="/kasutustingimused" element={<TermsPage />} />
         <Route path="/privaatsus" element={<PrivacyPolicyPage />} />
         <Route path="/kupsised" element={<CookiePolicyPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/meist" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/kontakt" element={<ContactPage />} />
         
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

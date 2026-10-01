@@ -2,67 +2,54 @@ import { Link } from 'react-router-dom';
 
 export default function AboutPage() {
   return (
-    <div className="page about-page">
-      <div className="container">
-        <h1 className="page-title">Meist</h1>
-
-        <div className="content-section">
-          <p className="intro-text">
-            AutoTark aitab kasutatud auto ostjal märgata kuulutuses asju, mis võivad muidu kahe silma vahele jääda.
+    <div className="page" style={{ padding: '2rem 0 5rem' }}>
+      <div className="container" style={{ maxWidth: '840px' }}>
+        <div className="page-header">
+          <p className="eyebrow">
+            <span className="pulse-dot"></span>
+            Meie missioon
           </p>
+          <h1>Meist ja AutoTark platvormist</h1>
           <p>
-            Meie eesmärk on teha autoostu läbipaistvamaks ja vähendada ostmise riskide. Me ei inspekteeri autot
-            kohapeal, kuid anname teile vahendused, et ennast paremini valmis hoida.
+            AutoTark on loodud selleks, et anda Eesti autoostjale teadlikkus ja kindlustunne kasutatud auto valimisel.
           </p>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">Miks AutoTark loodi</h2>
+        <div className="report-card">
+          <h2>Miks AutoTark loodi?</h2>
           <p>
-            Kasutatud auto ostmise maailm on keeruline. Kuulutused sisaldavad sageli vajalikku informatsiooni
-            puuduliselt või peituvad tõsiseid probleeme. AutoTark loodi selleks, et aidata ostjatel
-            mõistlikke otsuseid teha, põhinedes kuulutuses esitatud teatel.
+            Kasutatud auto ostmine on üks suuremaid finantsotsuseid, mida eraisik teeb, kuid müügikuulutused on sageli puudulikud, ilustatud või peidavad kalleid tehnilisi puudusi.
+          </p>
+          <p>
+            AutoTark toob kokku foorumite teadmised, tehasetagastused, spetsiifilised mootoripõlvkondade tüüpvead ja VIN-koodi avalikud arhiivid, et sa teaksid täpselt, mida enne ostu kontrollida ja müüjalt küsida.
           </p>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">Mida AutoTark teeb</h2>
-          <ul className="info-list">
-            <li>Analüüsib kuulutuse sisu ja tuvastab potentsiaalsed probleemid</li>
-            <li>Kontrollib mudeli tüüpilisi veapunkte ja hooldustarbeid</li>
-            <li>Kogub ja kajastab kasutaja salvestatud autoandmeid</li>
-            <li>Võrdleb erinevaid autoandid või sarnaseid mudелеid</li>
-            <li>Koostab aruande koondkogemuse ja soovituste kohta</li>
+        <div className="report-card">
+          <h2>Mida AutoTark teeb?</h2>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', paddingLeft: '1.25rem', color: 'var(--color-text-secondary)', fontSize: '0.95rem' }}>
+            <li>✓ Analüüsib Auto24 kuulutuse tehnilisi andmeid sekunditega.</li>
+            <li>✓ Tuvastab mootori, käigukasti ja mudelipõlvkonna kriitilised nõrgad kohad.</li>
+            <li>✓ Koostab kohapealseks kontrolliks spetsiifilise ostueelse kontroll-lehe.</li>
+            <li>✓ Annab valmis küsimuste nimekirja proovisõiduks ja müüjaga vestlemiseks.</li>
+            <li>✓ Hinnangulised remondikulud ja hoolduste ajastus järgmise 12–24 kuu jooksul.</li>
           </ul>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">Mida AutoTark ei tee</h2>
-          <ul className="info-list warning-list">
-            <li>AutoTark ei inspekteeri autot füüsiliselt ega teosta kohapealset kontrolli</li>
-            <li>Me ei garanteeri kuulutuses esitatud teabe õigsust</li>
-            <li>Me ei garanteeri, et kõiki võimalikke vigu leitakse</li>
-            <li>AutoTark ei ole asendus professionaalsele auto inspektsioonile</li>
-            <li>Me ei vastuta auto seisukorda ega selle väärtuse eest</li>
-          </ul>
-        </div>
-
-        <div className="content-section">
-          <h2 className="section-heading">Kuidas infot käsitleme</h2>
-          <p>
-            Kui kasutate AutoTark teenust, kogume ja kasutame teie poolt esitatud kuulutuste andmeid.
-            Andmeid kasutatakse ainult teenuse pakkumise jaoks ja mitte kolmandate osapooltega jagatud.
-          </p>
-          <p>
-            Täielikud andmete käsitlemise tingimused leiate meie <Link to="/privaatsus">privaatsuspoliitikast</Link>.
+        <div className="report-card" style={{ background: 'var(--color-warning-bg)', borderColor: 'var(--color-warning-border)' }}>
+          <h2 style={{ color: 'var(--color-warning-text)' }}>⚠️ Oluline piirang ja selgitus</h2>
+          <p style={{ color: 'var(--color-warning-text)', fontSize: '0.9375rem', lineHeight: 1.6 }}>
+            AutoTark pakub informatiivset analüüsi avalike andmete põhjal. AutoTark ei asenda füüsilist tehnoülevaatust ega ekspertiisi autotöökojas. Enne lõpliku ostuotsuse tegemist soovitame alati lasta sõiduk spetsialistil ja tõstukil üle vaadata.
           </p>
         </div>
 
-        <div className="content-section">
-          <h2 className="section-heading">Kontakt</h2>
-          <p>Kui teil on küsimusi või soovite lisainfot, võtke meiega ühendust:</p>
-          <Link to="/kontakt" className="btn btn-primary">
-            Võta ühendust
+        <div className="report-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <h3 style={{ margin: '0 0 0.25rem' }}>Kas sul on küsimusi või ettepanekuid?</h3>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>Oleme avatud koostööle ja kasutajate tagasisidele.</p>
+          </div>
+          <Link to="/kontakt" className="button">
+            Võta meiega ühendust
           </Link>
         </div>
       </div>

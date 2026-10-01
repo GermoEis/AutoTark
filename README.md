@@ -24,7 +24,7 @@ npm run research -- research-next
 
 Kontrollimiseks: `research-pending` ja `research-status`. Workerit saab käivitada välise scheduleriga, kutsudes `research-next` korduvalt.
 
-Veebirakenduse analüüsivoog kasutab `VITE_RESEARCH_API_URL` aadressi. Arenduses käivita frontend `npm run dev`, research API `npm run research:api` ning worker käsuga `npm run research -- research-next`.
+Veebirakenduse analüüsivoog kasutab `VITE_RESEARCH_API_URL` aadressi. Arenduses käivita frontend `npm run dev`, research API `npm run research:api` ning pidev worker käsuga `npm run research:worker`. Worker kontrollib PostgreSQL-i järjekorda vaikimisi iga 5 sekundi järel; intervalli saab muuta `RESEARCH_WORKER_INTERVAL_MS` muutujaga.
 
 ## Arhitektuur
 
