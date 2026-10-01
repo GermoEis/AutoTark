@@ -450,15 +450,15 @@ function Report() {
 
               {images.length > 0 ? (
                 <div className="vin-image-grid">
-                  {images.map((image, idx) => (
+                  {images.map((image) => (
                     <a
                       className="vin-image-card"
-                      key={idx}
+                      key={image.url}
                       href={image.searchUrl}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={image.url} alt={image.title} loading="lazy" onError={(event) => { event.currentTarget.alt = 'Pildi eelvaade pole saadaval'; event.currentTarget.style.display = 'none'; }} />
+                      <img src={image.url} alt={image.title} loading="lazy" onError={() => setImages((current) => current.filter((candidate) => candidate.url !== image.url))} />
                       <span>{image.title}</span>
                     </a>
                   ))}
