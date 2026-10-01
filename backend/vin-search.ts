@@ -71,5 +71,8 @@ export const searchVinImages = async (vinInput: string): Promise<{ vin: string; 
   }
   const uniqueImages = [...new Map(images.map((image) => [image.url, image])).values()].slice(0, 24);
   const availability = await Promise.all(uniqueImages.map(async (image) => ({ image, available: await isReachableImage(image.url) })));
-  return { vin, images: availability.filter((item) => item.available).map((item) => item.image).slice(0, 12), candidateCount: uniqueImages.length, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
+  const validatedImages = availability.filter((item) => item.available).map((item) => item.image);
+  // Keep search candidates when the source blocks server-side validation. The image proxy
+  // may still be able to load them with a browser-like referer, which worked for some auction hosts.
+  return { vin, images: (validatedImages.length ? validatedImages : uniqueImages).slice(0, 12), candidateCount: uniqueImages.length, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
 };

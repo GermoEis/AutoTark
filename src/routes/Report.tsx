@@ -458,7 +458,7 @@ function Report() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={image.url} alt={image.title} loading="lazy" />
+                      <img src={image.url} alt={image.title} loading="lazy" onError={(event) => { event.currentTarget.alt = 'Pildi eelvaade pole saadaval'; event.currentTarget.style.display = 'none'; }} />
                       <span>{image.title}</span>
                     </a>
                   ))}
