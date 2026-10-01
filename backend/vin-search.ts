@@ -56,7 +56,7 @@ export const searchVinImages = async (vinInput: string): Promise<{ vin: string; 
   const images: VinImageResult[] = [];
   if (config.googleSearchApiKey && config.googleSearchEngineId) {
     const google = await googleImageSearch(vin);
-    return { vin, images: google.images, candidateCount: google.candidateCount, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
+    if (google.candidateCount > 0) return { vin, images: google.images, candidateCount: google.candidateCount, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
   }
   if (!config.tavilyApiKey) return { vin, images, candidateCount: 0, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
   for (const query of queries) {
