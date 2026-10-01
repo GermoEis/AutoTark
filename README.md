@@ -5,7 +5,7 @@ Frontend jääb Vite/React rakenduseks. Research-agent on eraldi Node/TypeScript
 ## Käivitamine
 
 1. Paigalda sõltuvused: `npm install`.
-2. Kopeeri `.env.example` failiks `.env`, lisa `DATABASE_URL` ja `TAVILY_API_KEY`.
+2. Kopeeri `.env.example` failiks `.env`, lisa `DATABASE_URL` ja `TAVILY_API_KEY`. Google’i thumbnail-piltide jaoks lisa ka `GOOGLE_SEARCH_API_KEY` ja `GOOGLE_SEARCH_ENGINE_ID`; nende olemasolul kasutatakse VIN-pildiotsingus Google Custom Search image-tulemusi, muul juhul Tavily varuvarianti.
 3. Käivita PostgreSQL-is migratsioonid `db/migrations/001_research.sql` kuni `db/migrations/005_job_claims_saved_comparisons.sql`.
    Võid need käivitada ka käsuga `npm run db:migrate`.
 4. Käivita LM Studio, lae Qwen3-Coder-Next või muu sobiv mudel ja ava OpenAI-compatible server aadressil `LM_STUDIO_BASE_URL`.

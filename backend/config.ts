@@ -11,6 +11,8 @@ export const config = {
   llmModel: process.env.LLM_MODEL ?? 'qwen3-coder-next',
   searchProvider: process.env.SEARCH_PROVIDER ?? 'tavily',
   tavilyApiKey: process.env.TAVILY_API_KEY ?? '',
+  googleSearchApiKey: process.env.GOOGLE_SEARCH_API_KEY ?? '',
+  googleSearchEngineId: process.env.GOOGLE_SEARCH_ENGINE_ID ?? '',
   requestTimeoutMs: numberFromEnv('REQUEST_TIMEOUT_MS', 15_000),
   llmTimeoutMs: numberFromEnv('LLM_TIMEOUT_MS', 120_000),
   maxResponseBytes: numberFromEnv('MAX_RESPONSE_BYTES', 2_000_000),

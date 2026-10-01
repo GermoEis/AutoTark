@@ -19,6 +19,32 @@ const isReachableImage = async (url: string): Promise<boolean> => {
   } catch { return false; }
 };
 
+const googleImageSearch = async (vin: string): Promise<{ images: VinImageResult[]; candidateCount: number }> => {
+  const queries = [`"${vin}"`, `"${vin}" accident OR salvage OR damage`];
+  const images: VinImageResult[] = [];
+  for (const query of queries) {
+    try {
+      const endpoint = new URL('https://www.googleapis.com/customsearch/v1');
+      endpoint.searchParams.set('key', config.googleSearchApiKey);
+      endpoint.searchParams.set('cx', config.googleSearchEngineId);
+      endpoint.searchParams.set('q', query);
+      endpoint.searchParams.set('searchType', 'image');
+      endpoint.searchParams.set('num', '10');
+      endpoint.searchParams.set('safe', 'active');
+      const response = await fetch(endpoint, { signal: AbortSignal.timeout(config.requestTimeoutMs) });
+      if (!response.ok) continue;
+      const data = await response.json() as { items?: Array<{ title?: string; link?: string; image?: { thumbnailLink?: string; contextLink?: string } }> };
+      for (const item of data.items ?? []) {
+        const thumbnail = item.image?.thumbnailLink;
+        if (thumbnail && /^https?:\/\//i.test(thumbnail)) images.push({ url: thumbnail, title: item.title || `VIN ${vin}`, query, searchUrl: item.image?.contextLink || `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}` });
+      }
+    } catch { /* A failed Google query falls back to the other query/provider. */ }
+  }
+  const unique = [...new Map(images.map((image) => [image.url, image])).values()];
+  const availability = await Promise.all(unique.map(async (image) => ({ image, available: await isReachableImage(image.url) })));
+  return { images: availability.filter((item) => item.available).map((item) => item.image).slice(0, 12), candidateCount: unique.length };
+};
+
 export const searchVinImages = async (vinInput: string): Promise<{ vin: string; images: VinImageResult[]; candidateCount: number; googleSearchUrl: string }> => {
   const vin = validVin(vinInput);
   const queries = [
@@ -28,6 +54,10 @@ export const searchVinImages = async (vinInput: string): Promise<{ vin: string; 
     `"${vin}" vehicle history OR previous photos`,
   ];
   const images: VinImageResult[] = [];
+  if (config.googleSearchApiKey && config.googleSearchEngineId) {
+    const google = await googleImageSearch(vin);
+    return { vin, images: google.images, candidateCount: google.candidateCount, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
+  }
   if (!config.tavilyApiKey) return { vin, images, candidateCount: 0, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
   for (const query of queries) {
     try {
