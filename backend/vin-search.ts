@@ -19,7 +19,7 @@ const isReachableImage = async (url: string): Promise<boolean> => {
   } catch { return false; }
 };
 
-export const searchVinImages = async (vinInput: string): Promise<{ vin: string; images: VinImageResult[]; googleSearchUrl: string }> => {
+export const searchVinImages = async (vinInput: string): Promise<{ vin: string; images: VinImageResult[]; candidateCount: number; googleSearchUrl: string }> => {
   const vin = validVin(vinInput);
   const queries = [
     `"${vin}"`,
@@ -28,7 +28,7 @@ export const searchVinImages = async (vinInput: string): Promise<{ vin: string; 
     `"${vin}" vehicle history OR previous photos`,
   ];
   const images: VinImageResult[] = [];
-  if (!config.tavilyApiKey) return { vin, images, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
+  if (!config.tavilyApiKey) return { vin, images, candidateCount: 0, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
   for (const query of queries) {
     try {
       const response = await fetch('https://api.tavily.com/search', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ api_key: config.tavilyApiKey, query, max_results: 20, search_depth: 'advanced', include_images: true, include_image_descriptions: true }), signal: AbortSignal.timeout(config.requestTimeoutMs) });
@@ -41,5 +41,5 @@ export const searchVinImages = async (vinInput: string): Promise<{ vin: string; 
   }
   const uniqueImages = [...new Map(images.map((image) => [image.url, image])).values()].slice(0, 24);
   const availability = await Promise.all(uniqueImages.map(async (image) => ({ image, available: await isReachableImage(image.url) })));
-  return { vin, images: availability.filter((item) => item.available).map((item) => item.image).slice(0, 12), googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
+  return { vin, images: availability.filter((item) => item.available).map((item) => item.image).slice(0, 12), candidateCount: uniqueImages.length, googleSearchUrl: `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(vin)}` };
 };

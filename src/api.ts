@@ -8,7 +8,7 @@ const request = async <T>(path: string, init?: RequestInit): Promise<T> => { con
 export const inspectAuto24 = (url: string) => request<{ status: 'parsed' | 'needs_manual'; url: string; vehicle: ListingSnapshot; message?: string }>('/auto24/inspect', { method: 'POST', body: JSON.stringify({ url }) });
 export const createAnalysis = (listing: ListingSnapshot) => request<{ id: string }>('/analyses', { method: 'POST', body: JSON.stringify({ listing }) });
 export const getAnalysis = (id: string) => request<Analysis>(`/analyses/${encodeURIComponent(id)}`);
-export const getVinImages = (id: string) => request<{ vin: string | null; images: VinImageResult[]; googleSearchUrl: string | null }>(`/analyses/${encodeURIComponent(id)}/images`).then((result) => ({ ...result, images: result.images.map((image) => ({ ...image, url: `${researchApi}/image-proxy?url=${encodeURIComponent(image.url)}` })) }));
+export const getVinImages = (id: string) => request<{ vin: string | null; images: VinImageResult[]; candidateCount?: number; googleSearchUrl: string | null }>(`/analyses/${encodeURIComponent(id)}/images`).then((result) => ({ ...result, images: result.images.map((image) => ({ ...image, url: `${researchApi}/image-proxy?url=${encodeURIComponent(image.url)}` })) }));
 export interface SavedCar extends ListingSnapshot { id: string; analysisId?: string | null; createdAt: string; }
 export const getSavedCars = () => request<SavedCar[]>('/saved-cars');
 export const saveCar = (car: ListingSnapshot, analysisId?: string | null) => request<{ id: string }>('/saved-cars', { method: 'POST', body: JSON.stringify({ car, analysisId }) });

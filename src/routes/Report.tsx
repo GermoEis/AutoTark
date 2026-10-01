@@ -45,6 +45,7 @@ function Report() {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [images, setImages] = useState<VinImageResult[]>([]);
   const [googleSearchUrl, setGoogleSearchUrl] = useState<string | null>(null);
+  const [imageCandidateCount, setImageCandidateCount] = useState(0);
   const [error, setError] = useState('');
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const [isSaved, setIsSaved] = useState(false);
@@ -67,6 +68,7 @@ function Report() {
     getVinImages(carId)
       .then((result) => {
         setImages(result.images);
+        setImageCandidateCount(result.candidateCount ?? result.images.length);
         setGoogleSearchUrl(result.googleSearchUrl);
       })
       .catch(() => setImages([]));
@@ -464,7 +466,9 @@ function Report() {
               ) : (
                 <div style={{ padding: '1.25rem', background: 'var(--color-bg-dark)', borderRadius: 'var(--radius-md)', margin: '1rem 0' }}>
                   <p style={{ margin: 0, fontSize: '0.9rem' }}>
-                    Sellele VIN-koodile ei leitud otseseid avalikke avariipilte rahvusvahelistest oksjoniarhiividest.
+                    {imageCandidateCount > 0
+                      ? `Pildiotsing leidis ${imageCandidateCount} võimalikku vaste, kuid nende eelvaade ei ole algallika piirangute tõttu AutoTarkis saadaval. Ava Google Images, et vaadata vasteid ja kontrollida pildi allikat.`
+                      : 'Automaatne pildiotsing ei tagastanud praegu eelvaadatavaid vasteid. Kontrolli VIN-i kindlasti ka Google Images’is.'}
                   </p>
                 </div>
               )}
